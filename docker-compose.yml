@@ -1,0 +1,16 @@
+services:
+  database:
+    image: postgres:15
+    container_name: servicio_adomicilio_db
+    restart: always
+    environment:
+      POSTGRES_DB: db_servicios
+      POSTGRES_USER: adomicilio
+      POSTGRES_PASSWORD: root
+    ports:
+      - '5441:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
