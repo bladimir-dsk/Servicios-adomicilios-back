@@ -12,6 +12,9 @@ import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { CustomerInformationModule } from './customer-information/customer-information.module';
+import { CoverageAreaModule } from './coverage-area/coverage-area.module';
+import { CoveragePointsModule } from './coverage-points/coverage-points.module';
 
 dotenv.config();
 
@@ -48,6 +51,9 @@ dotenv.config();
     EmpresaModule,
     CategoryModule,
     ProductModule,
+    CustomerInformationModule,
+    CoverageAreaModule,
+    CoveragePointsModule,
   ],
   controllers: [],
   providers: [{ provide: APP_GUARD, useClass: ThrottlerGuard }],

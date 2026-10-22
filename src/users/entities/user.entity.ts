@@ -14,7 +14,7 @@ import {
 } from 'typeorm';
 
 import { Estatus } from '@/common/enums/estatus.enum';
-
+import { CustomerInformation } from '@/customer-information/entities/customer-information.entity';
 
 @Entity()
 export class User {
@@ -58,6 +58,9 @@ export class User {
   @JoinColumn({ name: 'id_empresa' })
   empresa: Empresa;
 
-  // @OneToMany(() => Student, (student) => student.user)
-  // students: Student[];
+  @OneToMany(
+    () => CustomerInformation,
+    (customerInformation) => customerInformation.user,
+  )
+  customerInformations: CustomerInformation[];
 }
