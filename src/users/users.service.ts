@@ -37,7 +37,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.usersRepository.find({ relations: ['empresa', 'School'] });
+    return this.usersRepository.find({ relations: ['empresa'] });
   }
 
   findUsuariosEmpresa() {

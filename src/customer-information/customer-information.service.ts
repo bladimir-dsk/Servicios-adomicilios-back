@@ -65,11 +65,15 @@ export class CustomerInformationService {
   }
 
   async findAll(user: UserActiveInterface) {
-    return this.customerInformationRepository.find({
+    const customerInformations = await this.customerInformationRepository.find({
       where: {
         id_user: user.id,
       },
+      relations: ['coverageArea.coveragePoints'],
     });
+    return {
+      customerInformations,
+    };
   }
 
   async findOne(id: number, user: UserActiveInterface) {
@@ -79,6 +83,7 @@ export class CustomerInformationService {
           id_customerInformation: id,
           id_user: user.id,
         },
+        relations: ['coverageArea.coveragePoints'],
       });
     if (!customerInformation) {
       throw new BadRequestException('Información del cliente no encontrada');
@@ -92,9 +97,22 @@ export class CustomerInformationService {
     user: UserActiveInterface,
   ) {
     const customerInformation = await this.findOne(id, user);
+    //cambio de cobertura
+
+    const coverageArea = await this.coverageAreaRepository.findOne({
+      where: {
+        id_coverageArea: updateCustomerInformationDto.id_coverageArea,
+      },
+    });
+    if (!coverageArea) {
+      throw new BadRequestException('Cobertura no encontrada');
+    }
+    updateCustomerInformationDto.id_coverageArea = coverageArea.id_coverageArea;
+
     return this.customerInformationRepository.save({
       ...customerInformation,
       ...updateCustomerInformationDto,
+      coverageArea,
     });
   }
 
